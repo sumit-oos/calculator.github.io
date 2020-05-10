@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GUI Calculator</title>
+
+<style>
+:root
+{
+--primary-color:#009688;
+--header-bg:#fff;
+--body-bg:#fbe9e7;
+--footer-bg:#fff;
+--font-color:#333;
+--symbol-color:#ff7043;
+--symbol-dark:#f4511e;
+--symbol-hover:#ff8a65;
+--slider-circle:#000;
+}
+
+*{
+padding:0;
+margin:0;			
+box-sizing:border-box;
+}
+
+.wrapper
+{
+width:100vw;
+height:100vh;		
+background:var(--primary-color);
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.calculator
+{
+display:grid;
+grid-template-rows:8% 25% auto;
+width:300px;
+height:500px;
+background:white;
+border-radius:5px;
+box-shadow:0px 0px 10px 3px rgba(0,0,0,0.2);
+}
+
+.calculator-header
+{
+display:flex;
+justify-content:flex-end;
+background-color:var(--header-bg);
+padding:0px 20px;
+border-top-left-radius:5px;
+border-top-right-radius:5px;
+}
+
+.calculator-body
+{
+background-color:var(--body-bg);
+display:flex;
+justify-content:flex-end;
+align-items:flex-end;
+text-align:right;
+padding:20px;
+}
+
+.calculator-footer
+{
+font-weight:bold;
+display:grid;
+grid-template-columns:auto auto auto auto;
+grid-template-rows:auto auto auto auto auto;
+background-color:var(--footer-bg);
+grid-column-gap:10px;
+grid-row-gap:10px;
+padding:10px 0px;
+justify-content:space-around;
+border-bottom-left-radius:5px;
+border-bottom-right-radius:5px;
+}
+
+
+.calculator-footer div
+{
+
+width:50px;
+height:50px;
+display:flex;
+justify-content:center;
+align-items:center;
+border-radius:50%;
+font-size:20px;
+font-weight:500px;
+color:var(--font-color);
+transition:0.4s all;
+}
+
+.calculator-footer div.symbol
+{
+background-color:var(--symbol-color);
+color:#fff;
+}
+
+.calculator-footer div.symbol-dark
+{
+background-color:var(--symbol-dark);
+color:#fff;
+}
+
+.calculator-footer div.symbol-dark:hover
+{			
+background-color:var(--symbol-dark);
+}
+
+.calculator-footer div:hover;
+{
+cursor:pointer;			
+}
+
+.calculator-footer div.symbol:hover
+{
+background-color:var(--symbol-hover);
+}
+
+.calculator-footer div:hover
+{
+background-color:#e5e5e5;
+}
+
+/*slider switch css */
+.theme-switch-wrapper {
+  display: flex;
+  align-items: center;
+}
+.theme-switch-wrapper em {
+  margin-left: 10px;
+  font-size: 1rem;
+}
+
+.theme-switch {
+  display: inline-block;
+  height: 16px;
+  position: relative;
+  width:50px;
+}
+
+.theme-switch input {
+  display: none;
+}
+
+.slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 0.4s;
+}
+
+.slider:before {
+  background-color:var(--slider-circle); 
+  content: "";
+  bottom: -5px;
+  height: 26px;
+  /* left: 0px; */
+  right: 25px;
+  position: absolute;
+  transition: 0.4s;
+  width: 26px;
+}
+
+input:checked + .slider {
+  background-color: #66bb6a;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+[data-theme="dark"]
+{
+--primary-color:#333;
+--header-bg:#000;
+--footer-bg:#000;
+--symbol-color:transparent;
+--symbol-hover:#ff5722;
+--slider-circle:#fff;
+}
+</style>
+
+<meta charset="utf-8">
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="calculator">
+
+<div class="calculator-header"> 
+<div class="theme-switch-wrapper">
+<label class="theme-switch" for="checkbox">
+<input type="checkbox" id="checkbox" />
+<div class="slider round"></div>
+</label>
+</div>
+</div>
+
+<div class="calculator-body"> 
+<div>
+<h1 id="output">0</h1>
+<br>
+<p id="input"></p>
+</div>
+</div>
+
+<div class="calculator-footer"> 
+<div onclick="calculate('C')" class="symbol"><span>C</span></div>
+<div onclick="calculate('AC')" class="symbol"><span>AC</span></div>
+<div onclick="calculate('%')" class="symbol"><span>%</span></div>
+<div onclick="calculate('/')" class="symbol"><span>/</span></div>
+<div onclick="calculate('7')"><span>7</span></div>
+<div onclick="calculate('8')" ><span>8</span></div>
+<div onclick="calculate('9')" ><span>9</span></div>
+<div onclick="calculate('*')" class="symbol"><span>×</span></div>
+<div onclick="calculate('4')" ><span>4</span></div>
+<div onclick="calculate('5')" ><span>5</span></div>
+<div onclick="calculate('6')"><span>6</span></div>
+<div onclick="calculate('-')" class="symbol"><span>-</span></div>
+<div onclick="calculate('1')"><span>1</span></div>
+<div onclick="calculate('2')"><span>2</span></div>
+<div onclick="calculate('3')"><span>3</span></div>
+<div onclick="calculate('+')" class="symbol"><span>+</span></div>
+<div onclick="calculate('0')"><span>0</span></div>
+<div onclick="calculate('00')"><span>00</span></div>
+<div onclick="calculate('.')"><span>.</span></div>
+<div onclick="calculate('=')" class="symbol-dark"><span>=</span></div>
+</div>
+
+</div>
+
+</div>
+
+<!--Math.js Libary-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/7.0.0/math.js"></script>
+
+<!--Javascript link-->
+
+<script src="javascript/javascript.js"></script>
+
+<script>
+const toggleSwitch = document.querySelector(
+  '.theme-switch input[type="checkbox"]'
+);
+
+function switchTheme(e) {
+  if (e.target.checked) {
+    document.documentElement.setAttribute("data-theme", "dark");
+  } else {
+    document.documentElement.setAttribute("data-theme", "light");
+  }
+}
+
+toggleSwitch.addEventListener("change", switchTheme, false);
+
+let input=document.getElementById("input");
+let output=document.getElementById("output");
+
+function calculate(data)
+{
+switch(data)
+{
+case 'AC':
+input.innerHTML="";
+output.innerHTML=0;
+break;
+
+case 'C':
+input.innerHTML=input.innerHTML.substr(0,input.innerHTML.length -1);
+output.innerHTML=math.evaluate(input.innerHTML) === undefined ? 0: math.evaluate(input.innerHTML);
+break;
+
+case '=':
+output.innerHTML=math.evaluate(input.innerHTML);
+break;
+
+default:input.innerHTML +=data;
+}
+}
+
+</script>
+
+</body>
+</html>
+
+
